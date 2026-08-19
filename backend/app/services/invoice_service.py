@@ -68,22 +68,8 @@ def _to_response_dict(invoice) -> dict:
             "tax": float(invoice.tax),
             "total": float(invoice.total),
         },
-<<<<<<< HEAD
         "created_at": invoice.created_at,
         "updated_at": invoice.updated_at,
-=======
-        "customer": {
-            "name": data.customer.name,
-            "email": str(data.customer.email),
-        },
-        "items": items_out,
-        "discount": data.discount,
-        "tax_rate": data.tax_rate,
-        "notes": data.notes,
-        "payment_method": data.payment_method,
-        "totals": totals,
-        "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S"),
->>>>>>> 563b594 (fix: form validation)
     }
 
 

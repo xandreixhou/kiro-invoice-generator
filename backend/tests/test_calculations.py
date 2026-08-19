@@ -41,12 +41,11 @@ def test_round_half_up():
 
 
 def test_tax_rounding():
-    # tax_rate 0.333 is quantized to 0.33 first (ROUND_HALF_UP)
-    # then: taxable 100 × 0.33 = 33.00
-    # Confirms quantization happens at each step, not just the end.
+    # tax_rate 0.333 → taxable 100 × 0.333 = 33.30
+    # Confirms quantization happens on the result, not the rate itself.
     items = [{"quantity": 1, "unit_price": 100}]
     result = calculate_totals(items, discount=0, tax_rate=0.333)
-    assert result["tax"] == 33.00
+    assert result["tax"] == 33.30
 
 
 # ---------------------------------------------------------------------------

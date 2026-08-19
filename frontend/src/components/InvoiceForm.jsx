@@ -79,6 +79,37 @@ export default function InvoiceForm({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    getBusinesses().then(setBusinesses).catch(() => {});
+    getCustomers().then(setCustomers).catch(() => {});
+  }, []);
+
+  async function handleAddBusiness() {
+    if (!newBusiness.name.trim()) return;
+    try {
+      const created = await createBusiness(newBusiness);
+      setBusinesses((prev) => [...prev, created]);
+      setBusinessId(created.id);
+      setNewBusiness({ name: "", address: "", email: "" });
+      setShowNewBusiness(false);
+    } catch (e) {
+      setError(e);
+    }
+  }
+
+  async function handleAddCustomer() {
+    if (!newCustomer.name.trim()) return;
+    try {
+      const created = await createCustomer(newCustomer);
+      setCustomers((prev) => [...prev, created]);
+      setCustomerId(created.id);
+      setNewCustomer({ name: "", email: "" });
+      setShowNewCustomer(false);
+    } catch (e) {
+      setError(e);
+    }
+  }
+
   const totals = useMemo(() => {
     const validItems = items.filter(
       (it) => it.description.trim() && Number(it.quantity) > 0 && it.unit_price !== ""
@@ -128,7 +159,7 @@ export default function InvoiceForm({
         unit_price: parseFloat(it.unit_price),
       })),
       discount: parseFloat(discount) || 0,
-      tax_rate: parseFloat(taxRate) / 100,
+      tax_rate: parseFloat(taxRate),
       notes: notes.trim() || null,
       payment_method: paymentMethod.trim() || null,
     };

@@ -72,8 +72,8 @@ def calculate_totals(
     taxable_amount = _q(subtotal - discount_amount)
     logger.info("Taxable amount: %s", taxable_amount)
 
-    tax_rate_d = _q(Decimal(str(tax_rate)))
-    tax_amount = _q(subtotal * tax_rate_d)
+    tax_rate_d = Decimal(str(tax_rate))
+    tax_amount = _q(taxable_amount * tax_rate_d)
     logger.info("Tax rate: %s  Tax amount: %s", tax_rate_d, tax_amount)
 
     total = _q(taxable_amount + tax_amount)
