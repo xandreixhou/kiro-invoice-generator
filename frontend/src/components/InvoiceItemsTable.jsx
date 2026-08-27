@@ -26,10 +26,10 @@ export default function InvoiceItemsTable({ items, onChange, onAdd, onRemove }) 
       </div>
 
       {items.map((item, i) => (
-        <div key={i} className="mb-3 grid grid-cols-[minmax(0,1.5fr)_minmax(100px,0.7fr)_minmax(120px,0.8fr)_minmax(120px,0.8fr)] items-center gap-3">
+        <div key={item._id} className="mb-3 grid grid-cols-[minmax(0,1.5fr)_minmax(100px,0.7fr)_minmax(120px,0.8fr)_minmax(120px,0.8fr)] items-center gap-3">
           <input
             className="h-11 rounded-[8px] border border-[#d7cedd] bg-white px-3 text-sm text-[#100418] outline-none transition focus:border-[#8f67d6] focus:ring-2 focus:ring-[#c5a3ff]/60"
-            defaultValue={item.description}
+            value={item.description}
             placeholder="Item description"
             onChange={(e) => handleField(i, "description", e.target.value)}
           />
@@ -38,7 +38,7 @@ export default function InvoiceItemsTable({ items, onChange, onAdd, onRemove }) 
             type="number"
             min="1"
             className="h-11 rounded-[8px] border border-[#d7cedd] bg-white px-3 text-center text-sm text-[#100418] outline-none transition focus:border-[#8f67d6] focus:ring-2 focus:ring-[#c5a3ff]/60"
-            defaultValue={item.quantity}
+            value={item.quantity}
             onChange={(e) => handleField(i, "quantity", e.target.value)}
           />
 
@@ -47,7 +47,7 @@ export default function InvoiceItemsTable({ items, onChange, onAdd, onRemove }) 
             min="0"
             step="0.01"
             className="h-11 rounded-[8px] border border-[#d7cedd] bg-white px-3 text-center text-sm text-[#100418] outline-none transition focus:border-[#8f67d6] focus:ring-2 focus:ring-[#c5a3ff]/60"
-            defaultValue={item.unit_price}
+            value={item.unit_price}
             onChange={(e) => handleField(i, "unit_price", e.target.value)}
           />
 

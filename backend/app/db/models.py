@@ -40,7 +40,7 @@ class Invoice(Base):
     __tablename__ = "invoices"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    invoice_number: Mapped[str] = mapped_column(String, nullable=False)
+    invoice_number: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     business_id: Mapped[int] = mapped_column(
         ForeignKey("businesses.id", ondelete="RESTRICT"), nullable=False, index=True
     )

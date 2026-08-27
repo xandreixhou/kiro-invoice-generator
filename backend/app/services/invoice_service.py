@@ -98,6 +98,9 @@ def create_invoice(db: Session, data: InvoiceCreate) -> dict:
     """Verify business/customer exist, calculate, check for duplicates, persist."""
     logger.debug("Service: create invoice %s", data.invoice_number)
 
+    if invoice_repository.find(db, data.invoice_number) is not None:
+        raise DuplicateInvoiceError(f"Invoice {data.invoice_number} already exists.")
+
     _verify_business_and_customer(db, data.business_id, data.customer_id)
 
     items_as_dicts = [{"quantity": i.quantity, "unit_price": i.unit_price} for i in data.items]

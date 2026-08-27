@@ -15,12 +15,18 @@ function inTwoWeeks() {
   return d.toISOString().slice(0, 10);
 }
 
+let _nextId = 1;
+function uid() {
+  return _nextId++;
+}
+
 function emptyItem() {
-  return { description: "", quantity: "", unit_price: "", item_total: "" };
+  return { _id: uid(), description: "", quantity: "", unit_price: "", item_total: "" };
 }
 
 function itemToRow(item) {
   return {
+    _id: uid(),
     description: item.description,
     quantity: String(item.quantity),
     unit_price: String(item.unit_price),

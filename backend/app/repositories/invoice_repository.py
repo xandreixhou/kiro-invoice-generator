@@ -14,7 +14,7 @@ from app.db.models import Invoice, InvoiceItem
 def _base_query(db: Session):
     return (
         db.query(Invoice)
-        .outerjoin(InvoiceItem, InvoiceItem.invoice_id == Invoice.business_id)
+        .outerjoin(InvoiceItem, InvoiceItem.invoice_id == Invoice.id)
         .options(
             joinedload(Invoice.business),
             joinedload(Invoice.customer),
@@ -66,8 +66,10 @@ def create(
         for item in items
     ]
     db.add(invoice)
+    db.flush()
+    result = find(db, invoice_number)
     db.commit()
-    return find(db, invoice_number)
+    return result
 
 
 def update(
@@ -103,7 +105,10 @@ def update(
         )
         for item in items
     ]
-    return find(db, invoice.invoice_number)
+    db.flush()
+    result = find(db, invoice.invoice_number)
+    db.commit()
+    return result
 
 
 def delete(db: Session, invoice_number: str) -> bool:
